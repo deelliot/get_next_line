@@ -1,0 +1,92 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strsplit.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: deelliot <deelliot@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/13 17:05:21 by deelliot          #+#    #+#             */
+/*   Updated: 2022/01/17 14:43:53 by deelliot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+static int	ft_count_words(char const *s, char c)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (s[i])
+	{
+		while (s[i] == c)
+			i++;
+		if (s[i] != c && s[i])
+			count++;
+		while (s[i] != c && s[i])
+			i++;
+	}
+	return (count);
+}
+
+static int	ft_transpose_array(char const *s, char **array, int i, size_t len)
+{
+	if (len > 0)
+	{
+		array[i] = ft_strsub(s - len, 0, len);
+		if (array[i])
+			return (1);
+		else
+			return (0);
+	}
+	return (1);
+}
+
+static char	**ft_del_array(char **array, int i)
+{
+	while (i--)
+		free (array[i]);
+	free (array);
+	return (NULL);
+}
+
+static char	**ft_assign_array(char **array, char const *s, char c)
+{
+	char	*start;
+	int		i;
+	int		words;
+
+	i = 0;
+	words = ft_count_words(s, c);
+	while (i < words)
+	{
+		while (*s == c && *s)
+			s++;
+		start = (char *)s;
+		while (*s != c && *s)
+			s++;
+		if (ft_transpose_array(s, array, i, s - start) == 0)
+			return (ft_del_array(array, i));
+		i++;
+	}
+	array[i] = NULL;
+	return (array);
+}
+
+char	**ft_strsplit(char const *s, char c)
+{
+	char	**array;
+	int		words;
+
+	if (!s)
+		return (NULL);
+	words = ft_count_words(s, c);
+	array = (char **)malloc(sizeof(*array) * (words + 1));
+	if (array)
+	{
+		array = ft_assign_array(array, s, c);
+	}
+	return (array);
+}
