@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: deelliot <deelliot@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/24 15:27:16 by deelliot          #+#    #+#             */
-/*   Updated: 2022/01/11 15:04:33 by deelliot         ###   ########.fr       */
+/*   Created: 2021/11/04 15:28:43 by deelliot          #+#    #+#             */
+/*   Updated: 2022/01/25 17:20:44 by deelliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*array;
+// strlcpy() copies up to dstsize - 1 characters from the string src to dst,
+// NUL-terminating the result if dstsize is not 0.
 
-	if (count == 0 || size == 0)
-		return (NULL);
-	array = malloc(count * size);
-	if (array == NULL)
-		return (array);
-	ft_bzero(array, count * size);
-	return (array);
+size_t	ft_strlcpy( char *dst, const char *src, size_t len)
+{
+	size_t	i;
+
+	i = 0;
+	if (!src)
+		return (0);
+	if (len > 0)
+	{
+		while (i < len - 1 && src[i])
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
+	}
+	while (src[i])
+		i++;
+	return (i);
 }
