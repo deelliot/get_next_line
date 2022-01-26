@@ -6,7 +6,7 @@
 /*   By: deelliot <deelliot@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:54:32 by deelliot          #+#    #+#             */
-/*   Updated: 2022/01/25 15:44:36 by deelliot         ###   ########.fr       */
+/*   Updated: 2022/01/26 10:19:55 by deelliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,14 @@ int	main(void)
 	int	fd;
 	char *line;
 	ssize_t	ret = 0;
-	char	buf[MAX_FD + 1];
-	ssize_t	size = BUFF_SIZE + 1;
-	int		i = 0;
-	char	*temp;
-
-	line = (char *)malloc(sizeof(BUFF_SIZE + 1));
+	line = (char *)malloc(sizeof(66));
 
 	fd = open("test.txt", O_RDONLY);
 	if (fd < 0)
 		printf("unable to open file\n");
-	ret = read(fd, buf, size);
-	if (ret > 0)
-	{
-		printf("ret = %zd\n", ret);
-		printf("buf = %s\n buf[i] = %c\n", buf, buf[i]);
-	}
-	ret = read(fd, buf, size);
-	if (ret > 0)
-	{
-		printf("ret = %zd\n", ret);
-		printf("buf = %s\n buf[i] = %c\n", buf, buf[i]);
-	}
-	// ret = get_next_line(fd, &line);
-	// printf("copied string: %s\n", line);
-	// printf("ret = %d\n", ret);
+	ret = get_next_line(fd, &line);
+	printf("copied string: %s\n", line);
+	printf("ret = %zd\n", ret);
 	free(line);
 	return (0);
 }
