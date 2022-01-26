@@ -6,7 +6,7 @@
 /*   By: deelliot <deelliot@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:37:31 by deelliot          #+#    #+#             */
-/*   Updated: 2022/01/26 17:20:44 by deelliot         ###   ########.fr       */
+/*   Updated: 2022/01/26 17:25:21 by deelliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	ft_file_status(const int fd, char **line, char **heap, ssize_t ret)
 		return (ft_transfer_line(fd, line, heap));
 }
 
-int get_next_line(const int fd, char **line)
+int	get_next_line(const int fd, char **line)
 {
 	static char	*heap[MAX_FD];
 	char		buf[BUFF_SIZE + 1];
