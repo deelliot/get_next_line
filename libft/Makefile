@@ -6,7 +6,7 @@
 #    By: deelliot <deelliot@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/03 13:04:07 by deelliot          #+#    #+#              #
-#    Updated: 2022/01/19 11:07:20 by deelliot         ###   ########.fr        #
+#    Updated: 2022/01/26 12:53:21 by deelliot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ FUNCTIONS = ft_memset ft_bzero ft_memcpy ft_memccpy ft_memmove ft_memchr \
 	ft_memalloc ft_memdel ft_strnew ft_strdel ft_strclr ft_striter ft_striteri \
 	ft_strmap ft_strmapi ft_strequ ft_strnequ ft_strsub ft_strjoin ft_strtrim \
 	ft_strsplit ft_itoa ft_putchar ft_putstr ft_putendl ft_putnbr \
-	ft_putchar_fd ft_putstr_fd ft_putendl_fd ft_putnbr_fd ft_calloc ft_lstnew \
+	ft_putchar_fd ft_putstr_fd ft_putendl_fd ft_putnbr_fd ft_lstnew \
 	ft_lstdelone ft_lstdel ft_lstadd ft_lstiter ft_lstadd_back ft_lstmap \
 
 SRCS = $(foreach src, $(FUNCTIONS), $(addsuffix .c, $(src)))

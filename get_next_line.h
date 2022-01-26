@@ -6,7 +6,7 @@
 /*   By: deelliot <deelliot@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:37:29 by deelliot          #+#    #+#             */
-/*   Updated: 2022/01/26 11:57:53 by deelliot         ###   ########.fr       */
+/*   Updated: 2022/01/26 15:19:08 by deelliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define BUFF_SIZE 32
 # define MAX_FD 4096
 
-# include "libft.h"
+# include "libft/libft.h"
 
 int	get_next_line(const int fd, char **line);
 
