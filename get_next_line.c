@@ -6,7 +6,7 @@
 /*   By: deelliot <deelliot@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:37:31 by deelliot          #+#    #+#             */
-/*   Updated: 2022/01/26 10:10:37 by deelliot         ###   ########.fr       */
+/*   Updated: 2022/01/26 12:02:20 by deelliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,46 +19,56 @@
 
 int	get_next_line(const int fd, char **line)
 {
-	ssize_t	ret;
-	char	buf[MAX_FD + 1];
-	ssize_t	size;
-	int		i;
-	char	temp[BUFF_SIZE];
+	ssize_t		ret;
+	char		buf[BUFF_SIZE + 1];
+	static char	*temp_array[MAX_FD];
+	char		*temp_str;
+	ssize_t		i;
 
-	ret = 0;
-	size = BUFF_SIZE + 1;
 	i = 0;
-
 	if (fd < 0 || !line || fd > MAX_FD)
 		return (-1);
-	ret = read(fd, buf, size);
-	if (ret < 0)
-		return (-1);
-	// remember to account for ret == 0
+	ret = read(fd, buf, BUFF_SIZE);
 	while (ret > 0)
 	{
-		while (i < BUFF_SIZE)
+		buf[ret] = '\0';
+		if (temp_array[fd] == NULL)
+			temp_array[fd] = ft_strdup(buf);
+		else
 		{
-			if (buf[i] == '\n')
-			{
-				printf("i got to first nl\n");
-				ft_strncpy(*line, buf, i);
-				return (1);
-			}
-			else if (buf[i] != '\n' && (i + 1) == BUFF_SIZE)
-			{
-				ft_strncpy(temp, buf, i);
-				i = 0;
-				read(fd, &buf[i], size);
-				if (buf[i] == '\n')
-				{
-					printf("i got to cat\n");
-					ft_strncat (*line, buf, i);
-					return (1);
-				}
-			}
-			i++;
+			temp_str = ft_strjoin (temp_array[fd], buf);
+			ft_strdel(&temp_array[fd]);
+			temp_array[fd] = temp_str;
 		}
+		if (ft_strchr(temp_array[fd], '\n'))
+			break ;
+		ret = read(fd, buf, BUFF_SIZE);
 	}
-	return (-1);
+	if (ret < 0)
+	{
+		ft_memdel ((void**) temp_array);
+		return (-1);
+	}
+	else if (ret == 0 && temp_array[fd] == NULL)
+	{
+		ft_memdel ((void**)temp_array);
+		return (0);
+	}
+	else
+	{
+		temp_str = NULL;
+		while (temp_array[fd][i] != '\n' && temp_array[fd][i] != '\0')
+			i++;
+		if (temp_array[fd][i] == '\n')
+		{
+			*line = ft_strsub(temp_array[fd], 0, i);
+			ft_strdel(temp_array);
+		}
+		else
+		{
+			*line = ft_strdup(temp_array[fd]);
+			ft_strdel(temp_array);
+		}
+		return (1);
+	}
 }
