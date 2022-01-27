@@ -6,7 +6,7 @@
 /*   By: deelliot <deelliot@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:37:31 by deelliot          #+#    #+#             */
-/*   Updated: 2022/01/26 17:25:21 by deelliot         ###   ########.fr       */
+/*   Updated: 2022/01/27 12:38:33 by deelliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	ft_transfer_line(const int fd, char **line, char **heap)
 	{
 		*line = ft_strsub(heap[fd], 0, i);
 		temp = ft_strdup(heap[fd] + i + 1);
-		free (heap[fd]);
+		free(heap[fd]);
 		heap[fd] = temp;
 		if (heap[fd][0] == '\0')
 			ft_strdel(&heap[fd]);
@@ -43,10 +43,7 @@ static int	ft_file_status(const int fd, char **line, char **heap, ssize_t ret)
 	if (ret < 0)
 		return (-1);
 	if (ret == 0 && heap[fd] == NULL)
-	{
-		ft_memdel((void **)heap);
 		return (0);
-	}
 	else
 		return (ft_transfer_line(fd, line, heap));
 }
@@ -65,9 +62,7 @@ int	get_next_line(const int fd, char **line)
 	{
 		buf[ret] = '\0';
 		if (heap[fd] == NULL)
-		{
 			heap[fd] = ft_strdup(buf);
-		}
 		else
 		{
 			temp = ft_strjoin(heap[fd], buf);
@@ -76,6 +71,7 @@ int	get_next_line(const int fd, char **line)
 		}
 		if (ft_strchr(heap[fd], '\n'))
 			break ;
+		ret = read(fd, buf, BUFF_SIZE);
 	}
 	return (ft_file_status(fd, line, heap, ret));
 }
