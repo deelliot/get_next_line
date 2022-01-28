@@ -5,16 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: deelliot <deelliot@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/24 14:37:31 by deelliot          #+#    #+#             */
-/*   Updated: 2022/01/28 11:50:54 by deelliot         ###   ########.fr       */
+/*   Created: 2022/01/28 11:53:36 by deelliot          #+#    #+#             */
+/*   Updated: 2022/01/28 12:36:50 by deelliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	ft_transfer_line(const int fd, char **line, char **heap)
+static int	ft_transfer_heap(const int fd, char **line, char **heap)
 {
-	size_t	i;
+	int		i;
 	char	*temp;
 
 	i = 0;
@@ -24,7 +24,7 @@ static int	ft_transfer_line(const int fd, char **line, char **heap)
 	if (heap[fd][i] == '\n')
 	{
 		temp = ft_strdup(heap[fd] + i + 1);
-		free(heap[fd]);
+		free (heap[fd]);
 		heap[fd] = temp;
 		if (heap[fd][0] == '\0')
 			ft_strdel(&heap[fd]);
@@ -34,22 +34,22 @@ static int	ft_transfer_line(const int fd, char **line, char **heap)
 	return (1);
 }
 
-static int	ft_file_status(const int fd, char **line, char **heap, ssize_t ret)
+static int	ft_check_file(const int fd, char **line, int ret, char **heap)
 {
 	if (ret < 0)
 		return (-1);
 	if (ret == 0 && heap[fd] == NULL)
 		return (0);
 	else
-		return (ft_transfer_line(fd, line, heap));
+		return (ft_transfer_heap(fd, line, heap));
 }
 
 int	get_next_line(const int fd, char **line)
 {
-	static char	*heap[MAX_FD];
 	char		buf[BUFF_SIZE + 1];
+	static char	*heap[MAX_FD];
 	char		*temp;
-	ssize_t		ret;
+	int			ret;
 
 	if (fd < 0 || !line || fd > MAX_FD)
 		return (-1);
@@ -62,12 +62,12 @@ int	get_next_line(const int fd, char **line)
 		else
 		{
 			temp = ft_strjoin(heap[fd], buf);
-			free(heap[fd]);
+			free (heap[fd]);
 			heap[fd] = temp;
 		}
 		if (ft_strchr(heap[fd], '\n'))
 			break ;
 		ret = read(fd, buf, BUFF_SIZE);
 	}
-	return (ft_file_status(fd, line, heap, ret));
+	return (ft_check_file (fd, line, ret, heap));
 }
