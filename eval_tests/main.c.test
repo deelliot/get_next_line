@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main.c.test                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: deelliot <deelliot@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:54:32 by deelliot          #+#    #+#             */
-/*   Updated: 2022/01/28 11:50:40 by deelliot         ###   ########.fr       */
+/*   Updated: 2022/01/28 14:11:09 by deelliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,13 @@ int	main(int argc, char **argv)
 	i = 1;
 	if (argc == 1)
 	{
-		printf("no file given");
-		return (0);
+		printf("\033[0;33mEnter a file name. Type \"exit\" to quit\n\033[m");
+		do{
+			line_count++;
+			ret = get_next_line(0, &line);
+			if (strcmp(line, "exit") != 0)
+				printf("ret %zd\tline_nbr[%zu]: %s\n", ret, line_count, line);
+		}while (strcmp(line, "exit") != 0);
 	}
 	while (i < argc)
 	{
@@ -55,6 +60,8 @@ int	main(int argc, char **argv)
 		printf("\033[0;32m[DONE] file: %s\n\033[m", argv[i]);
 		close(fd);
 		i++;
+		if (i != argc)
+			printf("\n");
 		line_count = 0;
 	}
 	return (0);
