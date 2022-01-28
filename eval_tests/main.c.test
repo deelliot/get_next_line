@@ -6,7 +6,7 @@
 /*   By: deelliot <deelliot@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 15:54:32 by deelliot          #+#    #+#             */
-/*   Updated: 2022/01/28 14:11:09 by deelliot         ###   ########.fr       */
+/*   Updated: 2022/01/28 17:22:51 by deelliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,42 @@
 #include<sys/types.h>
 #include<sys/stat.h>
 #include <fcntl.h>
+
+int	ft_create_file(int bytes, int lines)
+{
+	int		new_file;
+	int		old_file;
+	int		read_ret;
+	char	read_buf[bytes + 1];
+	int		i = 0;
+
+	new_file = open("test1.txt", O_RDWR | O_CREAT, 0666);
+	old_file = open("lorem.txt", O_RDONLY);
+	if (new_file < 0)
+	{
+		printf("unable to create file");
+		return (-1);
+	}
+	if (old_file < 0)
+	{
+		printf("unable to open lorem\n");
+		return (-1);
+	}
+	while (i < lines)
+	{
+		read_ret = read(old_file, read_buf, bytes);
+
+		if (read_ret > 0)
+		{
+			read_buf[read_ret] = '\n';
+			write(new_file, read_buf, bytes + 1);
+		}
+		i++;
+	}
+	close (new_file);
+	close (old_file);
+	return (1);
+}
 
 int	main(int argc, char **argv)
 {
@@ -27,6 +63,12 @@ int	main(int argc, char **argv)
 	fd = 0;
 	line_count = 0;
 	i = 1;
+
+	int bytes = 20;
+	int lines = 10;
+
+	ft_create_file(bytes, lines);
+
 	if (argc == 1)
 	{
 		printf("\033[0;33mEnter a file name. Type \"exit\" to quit\n\033[m");
