@@ -6,12 +6,11 @@
 /*   By: deelliot <deelliot@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:37:31 by deelliot          #+#    #+#             */
-/*   Updated: 2022/01/27 12:38:33 by deelliot         ###   ########.fr       */
+/*   Updated: 2022/01/28 11:50:54 by deelliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 static int	ft_transfer_line(const int fd, char **line, char **heap)
 {
@@ -21,9 +20,9 @@ static int	ft_transfer_line(const int fd, char **line, char **heap)
 	i = 0;
 	while (heap[fd][i] != '\n' && heap[fd][i] != '\0')
 		i++;
+	*line = ft_strsub(heap[fd], 0, i);
 	if (heap[fd][i] == '\n')
 	{
-		*line = ft_strsub(heap[fd], 0, i);
 		temp = ft_strdup(heap[fd] + i + 1);
 		free(heap[fd]);
 		heap[fd] = temp;
@@ -31,10 +30,7 @@ static int	ft_transfer_line(const int fd, char **line, char **heap)
 			ft_strdel(&heap[fd]);
 	}
 	else
-	{
-		*line = ft_strdup(heap[fd]);
 		ft_strdel(&heap[fd]);
-	}
 	return (1);
 }
 

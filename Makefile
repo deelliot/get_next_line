@@ -6,7 +6,7 @@
 #    By: deelliot <deelliot@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/26 12:08:40 by deelliot          #+#    #+#              #
-#    Updated: 2022/01/26 13:32:50 by deelliot         ###   ########.fr        #
+#    Updated: 2022/01/28 11:13:49 by deelliot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ $(NAME):
 
 clean:
 	rm -f *.o
+	make fclean -C libft/
 
 fclean: clean
 	rm -f $(NAME)
