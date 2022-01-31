@@ -6,7 +6,7 @@
 /*   By: deelliot <deelliot@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 11:53:36 by deelliot          #+#    #+#             */
-/*   Updated: 2022/01/28 13:31:04 by deelliot         ###   ########.fr       */
+/*   Updated: 2022/01/31 17:54:52 by deelliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,22 @@ int	get_next_line(const int fd, char **line)
 
 	if (fd < 0 || !line || fd > MAX_FD)
 		return (-1);
+	*line = NULL;
 	ret = read(fd, buf, BUFF_SIZE);
 	while (ret > 0)
 	{
 		buf[ret] = '\0';
 		if (heap[fd] == NULL)
+		{
 			heap[fd] = ft_strdup(buf);
+			if (heap[fd] == NULL)
+				return (-1);
+		}
 		else
 		{
 			temp = ft_strjoin(heap[fd], buf);
+			if (temp == NULL)
+				return (-1);
 			free (heap[fd]);
 			heap[fd] = temp;
 		}
