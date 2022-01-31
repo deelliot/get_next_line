@@ -6,7 +6,7 @@
 /*   By: deelliot <deelliot@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 11:53:36 by deelliot          #+#    #+#             */
-/*   Updated: 2022/01/31 17:54:52 by deelliot         ###   ########.fr       */
+/*   Updated: 2022/01/31 18:05:44 by deelliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	ft_check_file(const int fd, char **line, int ret, char **heap)
 int	get_next_line(const int fd, char **line)
 {
 	char		buf[BUFF_SIZE + 1];
-	static char	*heap[MAX_FD];
+	static char	*heap[MAX_FD + 1];
 	char		*temp;
 	int			ret;
 
